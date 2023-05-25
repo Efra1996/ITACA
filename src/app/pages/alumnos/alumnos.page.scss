@@ -1,0 +1,81 @@
+ion-col {
+    // border: solid 1px #fff;
+    text-align: center;
+  }
+  
+  ion-content {
+    // --background: url('/../assets/images/tatami5.jpg') no-repeat center center fixed;
+    // background-size: cover;
+    // --background: linear-gradient(45deg, rgba(3, 3, 3, 0.91) 0%, rgba(0, 0, 0, 0.8) 100%);
+    --background: #000000;
+  
+  
+  }
+  
+  ion-card {
+  
+    --background: #fff;
+    background-size: cover;
+    // --background: rgba(255, 255, 255, 0.5);
+    border: solid 5px hsl(0, 0%, 100%);
+    // color: #000000;
+    text-align: center;
+    box-shadow: 10px;
+  }
+  
+  ion-toolbar {
+    color: #fff;
+    border: solid 1px #000000;
+    --background: url('/../assets/images/tatami3.jpeg') no-repeat center center /cover;
+      background-position: center;
+  
+    box-shadow: 0 4px 8px rgba(228, 4, 4, 0.2);
+  }
+  ion-title{
+    text-align: center;
+    font-size: 27px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+  
+  ion-footer {
+    color: #ffffff;
+    text-align: center;
+    font-size: 30px;
+    font-family: 'Courier New', Courier, monospace;
+    margin-top: 250px;
+  }
+  
+  ion-input {
+    // --background: rgba(255, 255, 255, 0.5);
+    margin-bottom: 15px;
+    color: #ffffff;
+  }
+  
+  ion-datetime {
+    --background: url('/../assets/images/tatami3.jpeg') no-repeat center center ;
+    font-size: 15px;
+  }
+  ion-button{
+    color: #ffffff;
+    
+  }
+
+
+  form{
+    --background: rgba(255, 255, 255, 0.5);
+    color: #000000;
+    text-align: center;
+  }
+
+ion-button{
+  margin-top: 10px;
+}
+
+ion-card-content,
+ion-item {
+  --background: rgba(255, 255, 255, 0.5);
+  display: contents;
+}
+
+
+

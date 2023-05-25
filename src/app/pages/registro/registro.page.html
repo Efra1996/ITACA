@@ -1,0 +1,88 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="ion-text-center ion-text-capitalize">nuevo alumno</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <ion-row class="ion-justify-content-center">
+    <ion-avatar>
+      <img [src]="avatar" />
+    </ion-avatar>
+  </ion-row>
+
+  <form (submit)="onSubmit()" autocomplete="off" [formGroup]="formReg">
+    <ion-item>
+      <ion-input class="ion-margin-top" label="Correo de usuario" label-placement="floating" placeholder="Email"
+        type="email" formControlName="email"></ion-input>
+      <ion-icon slot="end" name="mail"></ion-icon>   
+    </ion-item>
+    <ion-text color="danger" *ngIf="campoEsValido('email')">*Campo obligatorio - formato de correo  </ion-text>
+    <ion-item>
+      <ion-input class="ion-margin-top" label="Contraseña" label-placement="floating" placeholder="Mas de 6 caracteres"
+        type="password" formControlName="password"></ion-input>
+      <ion-icon slot="end" name="key"></ion-icon>
+    </ion-item>
+    <ion-text color="danger" *ngIf="campoEsValido('password')">*Campo obligatorio - Más de 6 caracteres </ion-text>
+    <ion-item>
+      <ion-input class="ion-margin-top" label="Nombre" label-placement="floating" type="text"
+        formControlName="nombre"></ion-input>
+      <ion-icon name="person"></ion-icon>
+    </ion-item>
+    <ion-text color="danger" *ngIf="campoEsValido('nombre')">*Campo obligatorio </ion-text>
+    <ion-item>
+      <ion-input class="ion-margin-top" label="Apellidos" label-placement="floating" type="text"
+        formControlName="apellidos"></ion-input>
+      <ion-icon name="person-outline"></ion-icon>
+    </ion-item>
+    <ion-text color="danger" *ngIf="campoEsValido('apellidos')">*Campo obligatorio </ion-text>
+
+    <ion-item>
+      <ion-input class="ion-margin-top" label="Telefono" label-placement="floating" type="number"
+        formControlName="telefono"></ion-input>
+      <ion-icon name="call"></ion-icon>
+    </ion-item>
+    <ion-text color="danger" *ngIf="campoEsValido('telefono')">*Campo obligatorio - más de 9 números </ion-text>
+
+    <ion-item>
+      <ion-select formControlName="cinturon" label="Elegir cinturón" okText="Aceptar" cancelText="Cancelar">
+        <ion-select-option value="blanco">Blanco</ion-select-option>
+        <ion-select-option value="azul">Azul</ion-select-option>
+        <ion-select-option value="morado">Morado</ion-select-option>
+        <ion-select-option value="marron">Marron</ion-select-option>
+        <ion-select-option value="negro">Negro</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-input class="ion-margin-top" label="Peso (KG)" label-placement="floating" type="number"
+        formControlName="peso"></ion-input>
+      <ion-icon name="scale"></ion-icon>
+    </ion-item>
+
+    <ion-item>
+      <ion-select label="Elegir tarifa" okText="Aceptar" cancelText="Cancelar" formControlName="tarifa">
+        <ion-select-option value="iniciacion">Iniciacion (2 clases)</ion-select-option>
+        <ion-select-option value="avanzado">Avanzado (4 clases)</ion-select-option>
+        <ion-select-option value="ilimitado">Ilimitado</ion-select-option>
+        <ion-select-option value="bjj-gym">Ilimitado + Hangar</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-input class="ion-margin-top" label={{foto}} label-placement="floating" placeholder={{foto}} type="text"
+        formControlName="fotoPerfil"></ion-input>
+      <ion-fab-button color="danger" (click)="addNewFromGallery()">
+        <ion-icon name="camera"></ion-icon>
+      </ion-fab-button>
+    </ion-item >
+    <ion-button  shape="round" color="dark" [disabled]="formReg.invalid" (click)=" onSubmit()">
+      <ion-icon slot="end" name="checkmark-circle-sharp"></ion-icon>   Registrarse
+      </ion-button>
+    <ion-button shape="round" color="danger"  (click)="volverInicio()"> Cancelar
+      <ion-icon slot="end" name="close-circle-sharp"></ion-icon>
+    </ion-button>
+    <ion-spinner  *ngIf="mostrar"></ion-spinner>
+  </form>
+</ion-content>

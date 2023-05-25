@@ -1,0 +1,237 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Eventos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Eventos</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-card color="medium" button="true" class="clase" *ngFor="let evento of eventos">
+    <img alt="Silhouette of mountains" [src]="evento.foto"/>
+    <ion-card-header>
+      <ion-card-title>{{evento.nombre}} </ion-card-title>
+      <ion-card-subtitle>Localidad: {{evento.localidad}}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            Organizador: {{evento.organizador}}
+          </ion-col>
+          <ion-col>
+            Precio: {{evento.precio}}<strong>€</strong>
+          </ion-col>
+          <ion-col>
+            Fecha: {{evento.fecha}}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+    <ion-accordion-group>
+      <ion-accordion value="first">
+        <ion-item slot="header" color="medium">
+          <ion-label style="text-align: center;">Ver más</ion-label>
+        </ion-item>
+        <div  slot="content" style="color: rgb(255, 255, 255); background-color: #92949c;">
+          <ion-accordion-group [multiple]="true">
+            <ion-accordion value="first" toggleIcon="caret-down-circle" toggleIconSlot="end">
+              <ion-item slot="header" color="medium">
+                <ion-label style="text-align: center;">Modalidades:</ion-label>
+              </ion-item>
+              <div slot="content" style="color: rgb(255, 255, 255); background-color: #92949c;">
+                <ion-row *ngFor="let modalidad of evento.modalidades" style="text-align: center; font-size: medium;">
+                  ├ {{modalidad | titlecase}}
+                  </ion-row>
+              </div>
+            </ion-accordion>
+            <ion-accordion value="second" toggleIcon="caret-down-circle" toggleIconSlot="end">
+              <ion-item slot="header" color="medium">
+                <ion-label style="text-align: center;">Categorias:</ion-label>
+              </ion-item>
+              <div slot="content" style="color: rgb(255, 255, 255); background-color: #92949c; font-size: medium;">
+                <ion-row *ngFor="let categoria of evento.categorias">
+                  ├ {{categoria | titlecase}}
+             </ion-row>
+              </div>
+            </ion-accordion>
+            <ion-accordion value="third" toggleIcon="caret-down-circle" toggleIconSlot="end">
+              <ion-item slot="header" color="medium">
+                <ion-label style="text-align: center;">Pesos:</ion-label>
+              </ion-item>
+              <div slot="content" style="color: rgb(255, 255, 255); background-color: #92949c; text-align: center; font-size: medium;">
+                <ion-row *ngFor="let peso of evento.pesos">
+                  ├ {{peso | titlecase}}
+             </ion-row>
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+
+    <!-- <ion-button fill="clear">Action 2</ion-button> -->
+  </ion-card>
+
+  <!-- Boton Fab para abrir los modales -->
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button color="medium">
+      <ion-icon name="chevron-up-circle"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button>
+        <ion-icon name="today" (click)="setOpen(true)"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button>
+        <ion-icon name="trash" (click)="setBorrar(true)"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+  <ion-modal [isOpen]="isModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title> <strong>NUEVO EVENTO</strong></ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="setOpen(false)">Terminar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <form (submit)="onSubmit()" autocomplete="off" [formGroup]="formReg">
+          <ion-item>
+            <ion-input class="ion-margin-top" label="Titulo" label-placement="floating" type="text"
+              formControlName="nombre"></ion-input>
+              <ion-icon name="text-sharp"></ion-icon></ion-item>
+          <ion-text color="danger" *ngIf="campoEsValido('nombre')">*Campo obligatorio </ion-text>
+          <ion-item>
+            <ion-input class="ion-margin-top" label="Organizador" label-placement="floating" type="text"
+              formControlName="organizador"></ion-input>
+            <ion-icon name="person-outline"></ion-icon>
+          </ion-item>
+          <ion-text color="danger" *ngIf="campoEsValido('organizador')">*Campo obligatorio </ion-text>
+
+          <ion-item>
+            <ion-input class="ion-margin-top" label="Precio" label-placement="floating" type="number"
+              formControlName="precio"></ion-input>
+            <ion-icon name="logo-euro"></ion-icon> </ion-item>
+          <ion-text color="danger" *ngIf="campoEsValido('precio')">*Campo obligatorio</ion-text>
+
+          <ion-item>
+            <ion-input class="ion-margin-top" label="localidad" label-placement="floating" type="text"
+              formControlName="localidad"></ion-input>
+            <ion-icon name="locate-sharp"></ion-icon> </ion-item>
+          <ion-text color="danger" *ngIf="campoEsValido('localidad')">*Campo obligatorio </ion-text>
+
+          <ion-item>
+            <ion-input class="ion-margin-top" label="Fecha" label-placement="floating" placeholder="Fecha del evento"
+              type="text" formControlName="fechaEvento"></ion-input>
+            <ion-datetime-button color="danger" datetime="datetime"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime id="datetime" class="horas2" presentation="date" [value]="date" (ionChange)="onDateTimeChange($event)"
+                  [showDefaultButtons]="true" doneText="Aceptar" cancelText="Cancelar" format="YYYY-MM-DDTHH:mm"
+                  [firstDayOfWeek]="1" color="light"></ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </ion-item>
+          <!-- Modalidades -->
+          <ion-item>
+                <ion-select label="Modalidades" formControlName="modalidades"  [multiple]="true" style="color: white;" okText="Aceptar" cancelText="Cancelar">
+                  <ion-select-option value="gi">Gi</ion-select-option>
+                  <ion-select-option value="no-gi">No-Gi</ion-select-option>
+                </ion-select>
+          </ion-item>
+          <!-- Categoria -->
+          <ion-item>
+
+                <ion-select label="Categorias" formControlName="categorias" [multiple]="true" okText="Aceptar" cancelText="Cancelar" style="color: white;">
+                  <ion-select-option value="juvenil">Juvenil</ion-select-option>
+                  <ion-select-option value="adulto">Adulto</ion-select-option>
+                  <ion-select-option value="master 1">Master 1</ion-select-option>
+                  <ion-select-option value="master 2">Master 2</ion-select-option>
+                  <ion-select-option value="master 3">Master 3</ion-select-option>
+                  <ion-select-option value="master 4">Master 4</ion-select-option>
+                  <ion-select-option value="master 5">Master 5</ion-select-option>
+                </ion-select>
+
+          </ion-item>
+          <!-- Pesos -->
+          <ion-item>
+
+                <ion-select label="Pesos" formControlName="pesos" [multiple]="true" okText="Aceptar" cancelText="Cancelar" style="color: white;">
+                  <ion-select-option value="-50">-50 KG</ion-select-option>
+                  <ion-select-option value="-60">-60 KG</ion-select-option>
+                  <ion-select-option value="-65">-65 KG</ion-select-option>
+                  <ion-select-option value="-70">-70 KG</ion-select-option>
+                  <ion-select-option value="-75">-75 KG</ion-select-option>
+                  <ion-select-option value="-80">-80 KG</ion-select-option>
+                  <ion-select-option value="-85">-85 KG</ion-select-option>
+                  <ion-select-option value="-90">-90 KG</ion-select-option>
+                  <ion-select-option value="-95">-95 KG</ion-select-option>
+                  <ion-select-option value="+100">+100 KG</ion-select-option>
+                </ion-select>
+                
+          </ion-item>
+          <ion-item>
+            <ion-input class="ion-margin-top" label={{foto3}} label-placement="floating" placeholder={{foto3}}
+              type="text" formControlName="fotoEvento"></ion-input>
+            <ion-fab-button color="danger" (click)="addNewFromGallery()">
+              <ion-icon name="image"></ion-icon> </ion-fab-button>
+          </ion-item>
+          <ion-item *ngIf="mostrarFoto">
+            <img src="{{avatar}}" alt="Silhouette of mountains">
+          </ion-item>
+          <ion-button expand="block" shape="round" color="danger" [disabled]="formReg.invalid" (click)=" onSubmit()">
+            <ion-icon slot="end" name="checkmark-circle-sharp"></ion-icon> Agregar
+          </ion-button>
+
+
+          <ion-spinner *ngIf="mostrar"></ion-spinner>
+        </form>
+
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+  <ion-modal [isOpen]="isModalBorrar">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title> <strong>BORRAR EVENTO</strong> </ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="setBorrar(false)">Terminar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-list>
+          <ion-item>
+            <ion-label>Selecciona una fecha:</ion-label>
+            <ion-datetime-button color="danger" datetime="date"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime class="horas2" id="date" presentation="date" (ionChange)="buscarEventoBorrar($event)"
+                  [showDefaultButtons]="true" doneText="Aceptar" cancelText="Cancelar" format="YYYY-MM-DDTHH:mm"
+                  [firstDayOfWeek]="1" color="light"></ion-datetime>
+              </ng-template>
+            </ion-modal>
+
+          </ion-item>
+          <ion-item *ngFor="let evento of eventos">
+            <ion-label color="black">{{evento.nombre}} {{evento.organizador}}</ion-label>
+            <ion-button shape="round" color="danger" (click)="borrarEvento(evento)">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>

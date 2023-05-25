@@ -1,0 +1,148 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title><strong>Reserva de clases</strong> </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Clases</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button shape="round" fill="outline" color="light" (click)="restarDia()">
+          <ion-icon name="caret-back-outline"></ion-icon> </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-datetime-button color="danger" datetime="datetime"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime id="datetime" class="horas2" presentation="date" (ionChange)="onDateTimeChange($event)"
+              [showDefaultButtons]="true" doneText="Aceptar" [(ngModel)]="cambiaFecha" cancelText="Cancelar"
+              format="YYYY-MM-DDTHH:mm" [firstDayOfWeek]="1" color="light"></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </ion-col>
+      <ion-col>
+        <ion-button fill="outline" shape="round" color="light" (click)="sumarDia()">
+          <ion-icon name="caret-forward-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-card class="clase" *ngFor="let class of clases">
+    <ion-card-title style="margin-bottom :20px;   color: #ffffff;">{{class.titulo}} {{class.hora }}</ion-card-title>
+    <hr />
+    <ion-grid>
+      <ion-row>
+        <ion-col size="2.3" *ngFor="let item of class.alumno">
+          <ion-avatar id="trigger-button">
+            <img [src]="item">
+          </ion-avatar>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-button [disabled]="class.finalizada" [color]="class.apuntado? 'danger' : 'dark'"
+      (click)="nuevaReserva(class.hora,class)">
+      {{ class.apuntado ? 'Desapuntarse' : 'Apuntarse' }}
+    </ion-button>
+    <ion-card-content>
+      Alumnos apuntados : {{class.alumno.length}}
+    </ion-card-content>
+
+  </ion-card>
+  <ion-footer *ngIf="clases.length<1 && estaApuntado===false">¡Aún no hay clases para este dia!</ion-footer>
+  <ion-item *ngIf="estaApuntado===true" class="itemSpinner">
+    <ion-label>Cargando Clases</ion-label>
+    <ion-spinner></ion-spinner>
+  </ion-item>
+  <!-- añadir nueva clase o borrar clase -->
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button color="medium">
+      <ion-icon name="chevron-up-circle"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button>
+        <ion-icon name="today" (click)="setOpen(true)"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button>
+        <ion-icon name="trash" (click)="setBorrar(true)"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+  <!-- Abrir modal para nueva clase y otro para borrar -->
+  <ion-modal [isOpen]="isModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title> <strong>NUEVA CLASE</strong></ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="setOpen(false)">Terminar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <form [formGroup]="formReg" (submit)="crearNuevaClase()">
+          <ion-input color="danger" [autocapitalize]="true" placeholder="Nombre de la clase" formControlName="titulo"
+            [clearInput]="true" fill="outline"></ion-input>
+          <ion-datetime locale="es-ES" class="horas" [(ngModel)]="date" [firstDayOfWeek]="1" color="danger" [size]="350"
+            formControlName="fecha" [multiple]="true" presentation="date">
+            <span slot="title" style="color: rgb(255, 255, 255); font-size: 17px;">Selecciona la fecha de la
+              clase</span>
+          </ion-datetime>
+
+          <ion-datetime locale="es-ES" class="horas" [(ngModel)]="hora" presentation="time" [hourValues]="hourValues"
+            [minuteValues]="minuteValues" color="danger" [size]="350" formControlName="hora">
+            <span slot="title" style="color: rgb(255, 255, 255); font-size: 17px;">Selecciona la hora de la clase:
+            </span>
+          </ion-datetime>
+          <ion-button expand="block" color="danger" (click)="crearNuevaClase()" [disabled]="!formReg.valid"> Agregar
+          </ion-button>
+        </form>
+
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+  <!-- Abrir modal para nueva clase y otro para borrar -->
+  <ion-modal [isOpen]="isModalBorrar">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title> <strong>BORRAR CLASE</strong> </ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="setBorrar(false)">Terminar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-list>
+          <ion-item>
+            <ion-label>Selecciona una fecha:</ion-label>
+            <ion-datetime-button color="danger" datetime="date"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime class="horas2" id="date" presentation="date" (ionChange)="buscarClaseBorrar($event)"
+                  [showDefaultButtons]="true" doneText="Aceptar" cancelText="Cancelar" format="YYYY-MM-DDTHH:mm"
+                  [firstDayOfWeek]="1" color="light"></ion-datetime>
+              </ng-template>
+            </ion-modal>
+
+          </ion-item>
+          <ion-item *ngFor="let clase of clases">
+            <ion-label color="black">{{clase.titulo}} {{clase.hora}}</ion-label>
+            <ion-button shape="round" color="danger" (click)="borrarClase(clase)">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>

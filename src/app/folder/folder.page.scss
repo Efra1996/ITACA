@@ -1,0 +1,36 @@
+
+.contaier-login {
+  width: 90%;
+  padding: 10px;
+  background:  rgba(255, 255, 255, 0.5);
+  border-radius: 30px;
+  -webkit-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 10px 10px 5px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center; /* Centrar horizontalmente */
+  align-items: center;
+  margin: 20px;
+  margin-top: 170px;
+}
+
+ion-icon {
+  margin-right: 15px;
+}
+
+ion-item{
+  
+  --background: rgb(116,116, 116)
+  --background: linear-gradient(45deg, rgba(9, 0, 20, 0.91) 0%, rgba(33, 0, 48, 0.8) 100%);
+
+}
+ion-title{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 25px;
+  font-weight: bold;
+}
+ion-content{
+  --background: linear-gradient(45deg, rgba(9, 0, 20, 0.91) 0%, rgba(33, 0, 48, 0.8) 100%);
+}
+
+

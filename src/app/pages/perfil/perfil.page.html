@@ -1,0 +1,138 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Perfil</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+
+  <ion-row class="ion-justify-content-center">
+    <ion-avatar>
+      <img [src]="avatar" />
+    </ion-avatar>
+  </ion-row>
+
+  <form (submit)="onSubmit()" autocomplete="off" [formGroup]="formReg">
+    <!-- CORREO -->
+    <ion-item>
+      <ion-input class="ion-margin-top" label="Correo de usuario" label-placement="floating" placeholder="Email"
+        type="email" formControlName="email"></ion-input>
+      <ion-icon slot="end" name="mail"></ion-icon>
+    </ion-item>
+    <ion-text color="danger" *ngIf="campoEsValido('email')">*Campo obligatorio - formato de correo </ion-text>
+    <!-- CONTRASEÑA -->
+    <ion-item>
+      <ion-input class="ion-margin-top" label="Contraseña" label-placement="floating" placeholder="Mas de 6 caracteres"
+        type="password" formControlName="password"></ion-input>
+      <ion-icon slot="end" name="key"></ion-icon>
+    </ion-item>
+    <ion-text color="danger" *ngIf="campoEsValido('password')">*Campo obligatorio - Más de 6 caracteres </ion-text>
+    <!-- NOMBRE -->
+    <ion-item>
+      <ion-input class="ion-margin-top" label="Nombre" label-placement="floating" type="text"
+        formControlName="nombre"></ion-input>
+      <ion-icon name="person"></ion-icon>
+    </ion-item>
+    <ion-text color="danger" *ngIf="campoEsValido('nombre')">*Campo obligatorio </ion-text>
+    <!-- APELLIDOS -->
+    <ion-item>
+      <ion-input class="ion-margin-top" label="Apellidos" label-placement="floating" type="text"
+        formControlName="apellidos"></ion-input>
+      <ion-icon name="person-outline"></ion-icon>
+    </ion-item>
+    <ion-text color="danger" *ngIf="campoEsValido('apellidos')">*Campo obligatorio </ion-text>
+    <!-- TELEFONO -->
+    <ion-item>
+      <ion-input class="ion-margin-top" label="Telefono" label-placement="floating" type="number"
+        formControlName="telefono"></ion-input>
+      <ion-icon name="call"></ion-icon>
+    </ion-item>
+    <ion-text color="danger" *ngIf="campoEsValido('telefono')">*Campo obligatorio - más de 9 números </ion-text>
+    <!-- CINTURON -->
+    <ion-item>
+      <ion-select formControlName="cinturon" label="Elegir cinturón" okText="Aceptar" cancelText="Cancelar">
+        <ion-select-option value="blanco">Blanco</ion-select-option>
+        <ion-select-option value="azul">Azul</ion-select-option>
+        <ion-select-option value="morado">Morado</ion-select-option>
+        <ion-select-option value="marron">Marron</ion-select-option>
+        <ion-select-option value="negro">Negro</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <!-- PESO -->
+    <ion-item>
+      <ion-input class="ion-margin-top" label="Peso (KG)" label-placement="floating" type="number"
+        formControlName="peso"></ion-input>
+      <ion-icon name="scale"></ion-icon>
+    </ion-item>
+    <!-- TARIFAS -->
+    <ion-item>
+      <ion-select label="Elegir tarifa" okText="Aceptar" cancelText="Cancelar" formControlName="tarifa">
+        <ion-select-option value="iniciacion">Iniciacion (2 clases)</ion-select-option>
+        <ion-select-option value="avanzado">Avanzado (4 clases)</ion-select-option>
+        <ion-select-option value="ilimitado">Ilimitado</ion-select-option>
+        <ion-select-option value="bjj-gym">Ilimitado + Hangar</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <!-- AVATAR -->
+    <ion-item>
+      <ion-input class="ion-margin-top" label={{foto}} label-placement="floating" placeholder={{foto}} type="text"
+        formControlName="fotoPerfil"></ion-input>
+      <ion-fab-button color="danger" (click)="addNewFromGallery()">
+        <ion-icon name="camera"></ion-icon>
+      </ion-fab-button>
+    </ion-item>
+    <!-- Guardar -->
+    <ion-button shape="round" expand="block" color="dark" [disabled]="!formReg.dirty" (click)=" onSubmit()">
+      <ion-icon slot="end" name="checkmark-circle-sharp"></ion-icon> Guardar Cambios
+    </ion-button>
+    <!-- Cambiar Contraseña -->
+    <ion-button id="open-modal" shape="round" expand="block" color="danger">
+      <ion-icon slot="end" name="key"></ion-icon> Cambiar Contraseña
+    </ion-button>
+  </form>
+
+  <!-- MODAL PARA CAMBIAR CONTRASEÑA -->
+  <ion-modal #modal trigger="open-modal" [initialBreakpoint]="0.75" [breakpoints]="[0,0.35, 0.25, 0.5, 0.75]">
+    <ng-template>
+      <ion-content>
+        <form [formGroup]="formContra" (submit)="cambiaContra()">
+          <!-- Contraseña actual -->
+          <ion-item>
+            <ion-input class="ion-margin-top" label="Contraseña Actual" label-placement="floating"
+              placeholder="Mas de 6 caracteres" type="password" formControlName="actual"></ion-input>
+            <ion-icon slot="end" name="key"></ion-icon>
+
+          </ion-item>
+          <!--Nueva contraseña -->
+          <ion-item>
+            <ion-input class="ion-margin-top" label="Nueva Contraseña" label-placement="floating"
+              placeholder="Mas de 6 caracteres" type="password" formControlName="nueva"></ion-input>
+            <ion-icon slot="end" name="key"></ion-icon>
+
+          </ion-item>
+          <!-- Repite contraseña -->
+          <ion-item>
+            <ion-input class="ion-margin-top" label="Confirmar Contraseña" label-placement="floating"
+              placeholder="Mas de 6 caracteres" type="password" formControlName="confirmacion"></ion-input>
+            <ion-icon slot="end" name="key"></ion-icon>
+
+          </ion-item>
+          <!-- Btn confirmar -->
+            <ion-button id="open-modal" shape="round" expand="block" color="danger" (click)="cambiaContra()" [disabled]="!nuevaContraValida()">
+              <ion-icon slot="end" name="key"></ion-icon> Cambiar Contraseña
+            </ion-button>
+        </form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+</ion-content>

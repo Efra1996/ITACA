@@ -1,0 +1,130 @@
+ion-col {
+  // border: solid 1px #fff;
+  text-align: center;
+}
+
+ion-content {
+  // --background: url('/../assets/images/tatami5.jpg') no-repeat center center fixed;
+  // background-size: cover;
+  // --background: linear-gradient(45deg, rgba(3, 3, 3, 0.91) 0%, rgba(0, 0, 0, 0.8) 100%);
+  --background: #000000;
+
+
+}
+
+ion-card {
+
+  --background: url('/../assets/images/tatami3.jpeg') no-repeat center center fixed;
+  background-size: cover;
+  // --background: rgba(255, 255, 255, 0.5);
+  border: solid 5px hsl(0, 0%, 100%);
+  color: #000000;
+  text-align: center;
+  box-shadow: 10px;
+}
+
+ion-toolbar {
+  color: #fff;
+  border: solid 1px #000000;
+  --background: url('/../assets/images/tatami3.jpeg') no-repeat center center /cover;
+    background-position: center;
+
+  box-shadow: 0 4px 8px rgba(228, 4, 4, 0.2);
+}
+ion-title{
+  text-align: center;
+  font-size: 27px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+ion-footer {
+  color: #ffffff;
+  text-align: center;
+  font-size: 30px;
+  font-family: 'Courier New', Courier, monospace;
+  margin-top: 250px;
+}
+
+ion-input {
+  --background: rgba(255, 255, 255, 0.5);
+  margin-bottom: 15px;
+  color: #ffffff;
+}
+
+ion-datetime {
+  --background: url('/../assets/images/tatami3.jpeg') no-repeat center center ;
+  font-size: 15px;
+}
+ion-button{
+  color: #ffffff;
+  
+}
+.horas{
+  --background: rgba(255, 255, 255, 0.5);
+    // color: rgb(255, 255, 255); font-size: 17px;
+    // --background: #fff1f2;
+    --background-rgb: 255, 241, 242;
+  
+    // border-radius: 16px;
+    box-shadow: rgba(var(--ion-color-rose-rgb), 0.3) 0px 10px 15px -3px;
+    --ion-text-color: #881337;
+    --ion-text-color-rgb: 136, 19, 55;
+    text-align: center;
+    --ion-color-step-50: #ffffff;
+    --ion-color-step-100: #ffffff;
+    --ion-color-step-150: #ffffff;
+    --ion-color-step-200: #ffffff;
+    --ion-color-step-250: #ffffff;
+    --ion-color-step-300: #ffffff;
+    --ion-color-step-350: #ffffff;
+    --ion-color-step-400: #ffffff;
+    --ion-color-step-450: #ffffff;
+    --ion-color-step-500: #ffffff;
+    --ion-color-step-550: #ffffff;
+    --ion-color-step-600: #ffffff;
+    --ion-color-step-650: #ffffff;
+    --ion-color-step-700: #ffffff;
+    --ion-color-step-750: #ffffff;
+    --ion-color-step-800: #ffffff;
+    --ion-color-step-850: #ffffff;
+    --ion-color-step-900: #ffffff;
+    --ion-color-step-950: #ffffff;
+}
+.itemSpinner {
+  color: #000000;
+  text-align: center;
+  font-size: 30px;
+  font-family: 'Courier New', Courier, monospace;
+  margin-top: 250px;
+}
+.horas2{
+  --background: rgba(64, 50, 50, 0.5);
+    // color: rgb(255, 255, 255); font-size: 17px;
+    // --background: #fff1f2;
+    --background-rgb: 255, 241, 242;
+  
+    border-radius:3px;
+    box-shadow: rgba(var(--ion-color-rose-rgb), 0.3) 0px 10px 15px -3px;
+    --ion-text-color: #881337;
+    --ion-text-color-rgb: 136, 19, 55;
+    text-align: center;
+    --ion-color-step-50: #ffffff;
+    --ion-color-step-100: #ffffff;
+    --ion-color-step-150: #ffffff;
+    --ion-color-step-200: #ffffff;
+    --ion-color-step-250: #ffffff;
+    --ion-color-step-300: #ffffff;
+    --ion-color-step-350: #ffffff;
+    --ion-color-step-400: #ffffff;
+    --ion-color-step-450: #ffffff;
+    --ion-color-step-500: #ffffff;
+    --ion-color-step-550: #ffffff;
+    --ion-color-step-600: #ffffff;
+    --ion-color-step-650: #ffffff;
+    --ion-color-step-700: #ffffff;
+    --ion-color-step-750: #ffffff;
+    --ion-color-step-800: #ffffff;
+    --ion-color-step-850: #ffffff;
+    --ion-color-step-900: #000000;
+    --ion-color-step-950: #000000;
+}

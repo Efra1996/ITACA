@@ -1,0 +1,7 @@
+{
+  "name": "BJJ-Itaca",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

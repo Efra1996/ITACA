@@ -3,7 +3,6 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonicModule, ModalController, NavParams, PopoverController, ToastController } from '@ionic/angular';
 import { ComponetsModule } from 'src/app/componets/componets.module';
-import { DataService } from 'src/app/services/data.service';
 import { PhotoService } from 'src/app/services/photo.service';
 import { ActivatedRoute } from '@angular/router';
 import { getAuth } from 'firebase/auth';

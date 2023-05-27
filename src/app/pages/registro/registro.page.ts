@@ -45,15 +45,6 @@ export class RegistroPage implements OnInit {
   }
 
   addNewFromGallery() {
-    // this.photoService.addNewToGallery(this.guardarFoto,this.idFoto)
-    //   .then(
-    //     (resp) => {
-    //       this.foto = resp.filepath;
-    //       this.avatar = resp.webviewPath;
-    //       localStorage.setItem('avatar', resp.webviewPath!); 
-    //     }
-    //   )
-    //   .catch();
     this.photoService.addNewFromGallery(this.guardarFoto, this.idFoto)
       .then((resp) => {
         this.avatar = resp.webviewPath;
@@ -99,13 +90,13 @@ export class RegistroPage implements OnInit {
     this.formReg.reset();
     this.photoService.descargarAvatar(this.foto).then(
       (resp) => {
-        this.data.setAvatarPerfil(resp);
-        this.data.setNombre(this.foto);
+        // this.data.setAvatarPerfil(resp);
+        // this.data.setNombre(this.foto);
       }
 
     ).catch(
       () => {
-        console.log('Soy un pringado')
+      
       }
 
     )

@@ -6,7 +6,6 @@ import { initializeApp } from 'firebase/app';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environments/environment';
-import { DataService } from './data.service';
 
 export interface UserPhoto {
   filepath: string;

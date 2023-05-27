@@ -15,6 +15,7 @@ import { FirebaseService } from './services/firebase.service';
   imports: [IonicModule, RouterLink, RouterLinkActive, CommonModule, ComponetsModule],
 })
 export class AppComponent {
+  esProfe! : boolean;
   avatar!: string;
   nombre!: string;
   verificado : boolean =  true; //true para desactivar menu
@@ -30,10 +31,11 @@ export class AppComponent {
   ];
   constructor(private data: DataService,
     private photoService: PhotoService,
-    private firebase: FirebaseService) {}
+    private firebase: FirebaseService) {
+      this.cargarDatos();
+    }
 
   ngOnInit() {
-    this.cargarDatos();
   }
   cargarDatos(){
     const auth = getAuth();
@@ -42,7 +44,8 @@ export class AppComponent {
       this.verificado=false;// false para habilitar menu
       this.firebase.recuperarAlumno(user.email!).then(
         (alumno) => {
-          this.nombre=alumno.nombre;
+          this.nombre=alumno.nombre+' '+alumno.apellidos;
+          this.esProfe=alumno?.profesor;
           this.photoService.descargarAvatar(alumno.avatar).then(
             (resp) => {
               this.avatar = resp;

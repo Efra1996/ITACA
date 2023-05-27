@@ -2,21 +2,25 @@
   <ion-split-pane contentId="main-content"  >
     <ion-menu contentId="main-content" type="overlay" [disabled]="verificado">
       <ion-content>
-        <ion-list id="inbox-list">
-            <ion-avatar slot="start" style="align-self: center;">
+        <ion-list id="inbox-list" style="background:rgba(255, 255, 255, 0.5); border-radius: 15px; align-items: center;">
+            <ion-avatar slot="start" style="align-self: center; margin-bottom: 20px; margin-left: 45px; height: 135px; width: 135px;">
               <img [src]="avatar">
             </ion-avatar>
 
-          <ion-list-header>{{nombre}}
+          <ion-list-header><strong>{{nombre}}</strong>
           </ion-list-header>
-          <ion-note>hi@ionicframework.com</ion-note>
 
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index" >
-            <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
-              <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
-              <ion-label>{{ p.title }}</ion-label>
-            </ion-item>
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+            <ng-container *ngIf="!(p.title === 'Alumnos' && !esProfe)">
+              <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
+                <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+                <ion-label><strong> {{ p.title }}</strong>  </ion-label>
+              </ion-item>
+            </ng-container>
           </ion-menu-toggle>
+          
+
+
         </ion-list>
 
 

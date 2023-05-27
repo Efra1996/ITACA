@@ -61,7 +61,7 @@
   </ion-grid>
   <ion-footer *ngIf="pagos.length<1">¡No existen pagos registrados!</ion-footer>
   <!-- Boton Fab para abrir los modales -->
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end" *ngIf="esProfe">
     <ion-fab-button color="medium">
       <ion-icon name="chevron-up-circle"></ion-icon>
     </ion-fab-button>

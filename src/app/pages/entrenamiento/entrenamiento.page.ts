@@ -6,6 +6,7 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 import { PhotoService } from 'src/app/services/photo.service';
 import { ComponetsModule } from 'src/app/componets/componets.module';
 import { Entrenamiento } from 'src/app/interfaces/interfaces';
+import { getAuth } from 'firebase/auth';
 
 @Component({
   selector: 'app-entrenamiento',
@@ -19,7 +20,7 @@ import { Entrenamiento } from 'src/app/interfaces/interfaces';
 export class EntrenamientoPage implements OnInit {
   filtro: string;
   filtro2: string;
-
+  esProfe! : boolean;
   semanal = false;
   libre = false;
   gym = false;
@@ -32,6 +33,10 @@ export class EntrenamientoPage implements OnInit {
   entrenoIntervalos!: Entrenamiento[];
   allEntrenos : Entrenamiento[]=[]
   entrenoBusqueda : string ='';
+  auth = getAuth();
+  user = this.auth.currentUser;
+  alumnoActual: any;
+  alumnoAvatar: string = '';
 
   //Formulario
   formReg: FormGroup = this.fb.group({
@@ -50,6 +55,19 @@ export class EntrenamientoPage implements OnInit {
     public popoverController: PopoverController) {
     this.filtro = 'especificos';
     this.filtro2 = 'todo';
+    if (this.user) {
+      this.firebase.recuperarAlumno(this.user.email!).then(
+        (alumno) => {
+          this.alumnoActual = alumno
+          this.esProfe=alumno?.profesor;
+          this.foto.descargarAvatar(alumno.avatar).then(
+            (resp) => {
+              this.alumnoAvatar = resp
+            })
+          console.log(this.alumnoActual)
+        }
+      )
+    }
 
   }
 

@@ -18,7 +18,7 @@ import { Evento } from 'src/app/interfaces/interfaces';
   providers: [DatePipe]
 })
 export class EventosPage implements OnInit {
-  
+  esProfe! : boolean;
   mostrarFoto:boolean = false;
   mostrar: boolean = false;
   prueba!: string;
@@ -70,6 +70,7 @@ export class EventosPage implements OnInit {
       this.firebase.recuperarAlumno(this.user.email!).then(
         (alumno) => {
           this.alumnoActual = alumno
+          this.esProfe=alumno?.profesor;
           this.foto.descargarAvatar(alumno.avatar).then(
             (resp) => {
               this.alumnoAvatar = resp

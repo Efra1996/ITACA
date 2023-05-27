@@ -18,6 +18,7 @@ import { async } from 'rxjs';
   providers: [DatePipe]
 })
 export class PagosPage implements OnInit {
+  esProfe! : boolean;
   alumnos! : any ;
   isModalOpen = false;
   isModalBorrar = false;
@@ -51,6 +52,7 @@ cambiaFecha2!: string;
         this.firebase.recuperarAlumno(this.user.email!).then(
           (alumno) => {
             this.alumnoActual = alumno
+            this.esProfe=alumno?.profesor;
             this.foto.descargarAvatar(alumno.avatar).then(
               (resp) => {
                 this.alumnoAvatar = resp

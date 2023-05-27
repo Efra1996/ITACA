@@ -20,6 +20,7 @@ import { StringifyOptions } from 'querystring';
   providers: [DatePipe]
 })
 export class ClasesPage implements OnInit {
+  esProfe! : boolean;
   clases: Clase[] = [];
   date!: string;
   hora!: string;
@@ -56,6 +57,7 @@ export class ClasesPage implements OnInit {
       this.firebase.recuperarAlumno(this.user.email!).then(
         (alumno) => {
           this.alumnoActual = alumno
+          this.esProfe=alumno?.profesor;
           this.foto.descargarAvatar(alumno.avatar).then(
             (resp) => {
               this.alumnoAvatar = resp

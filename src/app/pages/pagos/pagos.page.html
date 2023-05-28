@@ -17,7 +17,7 @@
   </ion-header>
 
   <ion-segment value="todo" color="light" mode="ios" style="background-color: lightgray;"
-    (ionChange)="cambiaFiltro($event)">
+    (ionChange)="cambiaFiltro($event)" *ngIf="esProfe">
     <ion-segment-button value="todo">
       <ion-label>Todos</ion-label>
     </ion-segment-button>

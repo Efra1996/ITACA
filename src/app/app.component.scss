@@ -1,5 +1,7 @@
 ion-menu ion-content {
   --background: var(--ion-item-background, var(--ion-background-color, #4f4f4f));
+  border-right: 5px solid var(--ion-color-step-150, #d7d8da);
+
 }
 
 ion-menu.md ion-content {
@@ -23,7 +25,9 @@ ion-menu.md ion-note {
 }
 
 ion-menu.md ion-list#inbox-list {
-  border-bottom: 1px solid var(--ion-color-step-150, #d7d8da);
+  border: 5px solid var(--ion-color-step-150, #d7d8da);
+  // border-right: 5px solid var(--ion-color-step-150, #d7d8da);
+
 }
 
 ion-menu.md ion-list#inbox-list ion-list-header {
@@ -72,6 +76,8 @@ ion-menu.ios ion-content {
 
 ion-menu.ios ion-list {
   padding: 20px 0 0 0;
+  border-bottom: 5px solid var(--ion-color-step-150, #d7d8da);
+  border-right: 5px solid var(--ion-color-step-150, #d7d8da);
 }
 
 ion-menu.ios ion-note {

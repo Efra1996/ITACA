@@ -13,6 +13,8 @@
       <ion-title size="large">Alumnos</ion-title>
     </ion-toolbar>
   </ion-header>
+  <ion-searchbar placeholder="Nombre y Apellidos" color="medium" style=" --border-radius:25px"
+  (ionChange)="buscarAlumno($event)" [value]="alumnoBusqueda"></ion-searchbar>
   <ion-card color="medium" button="true" class="clase">
     <ion-card-header>
       <ion-card-title style="font-size: 20px; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">LISTADO

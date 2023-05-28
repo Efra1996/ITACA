@@ -655,6 +655,25 @@ export class FirebaseService {
     });
 
   }
+  recuperarAlumnosNombre(nombre: string,apellidos:string): Promise<any> {
+    const citiesRef = collection(this.db, "alumnos");
+    const q = query(citiesRef, where("nombre", "==", nombre),where("apellidos", "==", apellidos));
+    const alumnos: any[] = [];
+    return new Promise((resolve, reject) => {
+      getDocs(q)
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            console.log(doc.ref)
+            alumnos.push(doc.data());
+            resolve(alumnos);
+          });
+          resolve(null); // Si no se encuentra ningún alumno con el correo especificado
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
 }
 
 

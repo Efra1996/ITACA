@@ -53,15 +53,27 @@ cambiaFecha2!: string;
           (alumno) => {
             this.alumnoActual = alumno
             this.esProfe=alumno?.profesor;
-            this.foto.descargarAvatar(alumno.avatar).then(
-              (resp) => {
-                this.alumnoAvatar = resp
-              })
-            console.log(this.alumnoActual)
+            if(!this.esProfe){
+              this.pagos = [];
+               this.firebase.recuperarPagosNombre(alumno.nombre,alumno.apellidos).then((pago)=>{
+                if(pago){
+                  pago.sort((a:any, b:any) => {
+                    const fechaA = new Date(a.fecha).getTime();
+                    const fechaB = new Date(b.fecha).getTime();
+              
+                    return fechaA - fechaB;
+                  })
+                  console.log(pago)
+                  this.pagos = pago;
+                }
+               });            
+            }else{
+              this.getAllPagos();
+
+            }
           }
         )
       }
-      this.getAllPagos();
      }
 
   ngOnInit() {

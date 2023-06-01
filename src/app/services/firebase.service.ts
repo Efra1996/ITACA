@@ -84,7 +84,8 @@ export class FirebaseService {
       .then(async (_) => {
         return signInWithEmailAndPassword(auth, email, contra)
           .then((userCredential) => {
-            this.presentToast('Bienvenido');
+            console.log(userCredential)
+            this.presentToast('¡Bienvenido a ITACA!');
 
             // Signed in
             const user = userCredential.user;

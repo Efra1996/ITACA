@@ -47,12 +47,17 @@
             <img [src]="item">
           </ion-avatar>
           <!-- popover -->
-          <ion-popover [trigger]="'trigger-button' + class.titulo + i" triggerAction="hover">
+          <ion-popover [trigger]="'trigger-button' + class.titulo + i" triggerAction="hover" alignment="center"  [animated]="true" >
             <ng-template>
               <ion-content class="ion-text-center" style="color: white; font-size: 15px; --background: #ffffff;">
-                <ion-img [src]="item"
-                alt="The Wisconsin State Capitol building in Madison, WI at night" style="height: 250px; width: 300px; object-fit: cover;"></ion-img>
-               <ion-label>{{class.nombres![i]}}</ion-label>
+                <ion-thumbnail style="margin: 20px; height: 200px; width: 200px;">
+                  <img alt="Silhouette of mountains" [src]="item" style="border-radius: 20px;"/>
+                </ion-thumbnail>
+                <!-- <ion-img [src]="item"
+                alt="The Wisconsin State Capitol building in Madison, WI at night" style="height: 250px; width: 300px; object-fit: cover; padding: auto;">
+              </ion-img> -->
+
+               <ion-label style="font-size: 18px; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif ;"> <strong>{{class.nombres![i]}}</strong> </ion-label>
              </ion-content>
             </ng-template>
           </ion-popover>

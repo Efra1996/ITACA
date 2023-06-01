@@ -79,7 +79,7 @@ export class ClasesPage implements OnInit {
     if (item.apuntado === false) {
       if (this.user) {
 
-        await this.firebase.apuntarAlumno(this.fechaSeleccionada, hora.toString(), this.alumnoActual.nombre + '-' + this.alumnoActual.avatar)
+        await this.firebase.apuntarAlumno(this.fechaSeleccionada, hora.toString(), this.alumnoActual.nombre , this.alumnoActual.avatar)
           .catch(
             (error) => {
               console.log(error);
@@ -89,7 +89,7 @@ export class ClasesPage implements OnInit {
       }
     } else {
       if (this.user) {
-        await this.firebase.borrarAlumno(this.fechaSeleccionada, hora.toString(), this.alumnoActual.nombre + '-' + this.alumnoActual.avatar)
+        await this.firebase.borrarAlumno(this.fechaSeleccionada, hora.toString(), this.alumnoActual.nombre , this.alumnoActual.avatar)
         await this.claseSeleccionada();
       }
     }
@@ -110,9 +110,9 @@ export class ClasesPage implements OnInit {
       let promesas = clases.map(({ alumno }) => { // Primero descargar el avatar de los alumnos
         return Promise.all(
           alumno.map((datos: string) => {
-            const separaAvatar = datos.split('-');
+            // const separaAvatar = datos.split('-');
             // nombreAlumnos.push(separaAvatar[0])
-            return this.foto.descargarAvatar(separaAvatar[1]).catch((error) => {
+            return this.foto.descargarAvatar(datos).catch((error) => {
               console.log(error);
               return null;
             });
@@ -163,6 +163,7 @@ export class ClasesPage implements OnInit {
             alumno: clases.alumno,
             apuntado: apuntado,
             finalizada: finalizada,
+            nombres:clases.nombres
             // nombreAlumnos: nombreAlumnos.slice(index * clases.alumno.length, (index + 1) * clases.alumno.length)
           }
           this.clases.push(nuevaClase)
@@ -233,12 +234,13 @@ export class ClasesPage implements OnInit {
     const fechasCompletas = this.formReg.controls['fecha'].value;
     const titulo = this.formReg.controls['titulo'].value;
     const alumnos: string[] = [];
+    const nombres:string[]=[]
     let fechas: string[] = [];
     fechasCompletas.map((fecha: any) => {
       fechas.push(this.datePipe.transform(fecha, 'dd/MM/yyyy')!)
     })
 
-    this.firebase.subirNuevaClase(fechas, hora, alumnos, titulo)
+    this.firebase.subirNuevaClase(fechas, hora,nombres, alumnos, titulo)
       .then((_) => {
         this.presentToast('Nueva clase de ' + titulo + ' creada!');
         this.formReg.reset();

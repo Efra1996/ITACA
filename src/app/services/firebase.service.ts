@@ -150,7 +150,7 @@ export class FirebaseService {
 
   }
   // Añadir nueva clase y ver anteriores
-  async subirNuevaClase(fechas: string[], hora: string, alumno: string[], titulo: string) {
+  async subirNuevaClase(fechas: string[], hora: string,nombres : string[], alumno: string[], titulo: string) {
     try {
 
       fechas.map(async (fecha: any) => {
@@ -159,7 +159,8 @@ export class FirebaseService {
           titulo: titulo,
           fecha: fecha,
           hora: hora,
-          alumno: alumno
+          alumno: alumno,
+          nombres:nombres
         }).then(() => {
 
           console.log("Document writte");
@@ -197,7 +198,7 @@ export class FirebaseService {
         });
     });
   }
-  apuntarAlumno(fecha: string, hora: string, alumno: string) {
+  apuntarAlumno(fecha: string, hora: string,nombre : string, alumno: string) {
     const citiesRef = collection(this.db, "clases");
     const q = query(citiesRef, where("fecha", "==", fecha), where("hora", "==", hora));
 
@@ -207,6 +208,7 @@ export class FirebaseService {
 
           querySnapshot.forEach((doc) => {
             updateDoc(doc.ref, { alumno: arrayUnion(alumno) })
+            updateDoc(doc.ref, { nombres: arrayUnion(nombre) })
             const clase = doc.data();
             resolve(clase);
           });
@@ -218,7 +220,7 @@ export class FirebaseService {
     });
 
   }
-  borrarAlumno(fecha: string, hora: string, alumno: string) {
+  borrarAlumno(fecha: string, hora: string,nombre : string, alumno: string) {
     const citiesRef = collection(this.db, "clases");
     const q = query(citiesRef, where("fecha", "==", fecha), where("hora", "==", hora));
 
@@ -229,6 +231,7 @@ export class FirebaseService {
           querySnapshot.forEach((doc) => {
 
             updateDoc(doc.ref, { alumno: arrayRemove(alumno) })
+            updateDoc(doc.ref, { nombres: arrayRemove(nombre) })
             const clase = doc.data();
             resolve(clase);
           });

@@ -25,7 +25,7 @@ export class AppComponent {
     'Todo el progreso tiene lugar fuera de la zona de confort',
     'Si quieres ser un Tiburón, debes entrenar con los Tiburones',
     'Aprender es la clave del progreso, La ignorancia es la limitación, la sabiduría es la libertad',
-    'Las medallas se ganan en el gimnasio, en día de la competición es cuando se recogen'
+    'Las medallas se ganan en el gimnasio, el día de la competición es cuando se recogen'
   ];
   fraseMuestra! : string;
   esProfe! : boolean;

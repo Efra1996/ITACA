@@ -19,22 +19,23 @@ export class FirebaseService {
     private navCtrl: NavController,
   ) {
   }
-  async crearNuevoUsuario(email: any, contra: any, foto: any) : Promise<any> {
+  async crearNuevoUsuario(email: any, contra: any, foto: any) : Promise<boolean> {
     try {
       const auth = getAuth(this.app);
       const userCredential = await createUserWithEmailAndPassword(auth, email, contra);
       this.presentToast('Usuario creado correctamente');
       const user = userCredential.user;
-      return userCredential
+      return true
 
     } catch (error: any) {
       const errorCode = error.code;
       const errorMessage = error.message;
       this.presentToast(this.errores(error.message));
       console.log(error.message);
+      return false
     }
   }
-  async guardarNuevoAlumno(email: any, contra: any, nomb: string, ape: string, tel: number, cinto: string, pes: number, trf: string, foto: any,dni : string, fecha : any) {
+  async guardarNuevoAlumno(email: any, contra: any, nomb: string, ape: string, tel: number, cinto: string, pes: number, trf: string, foto: any,dni : string, fecha : any) : Promise<any> {
     try {
       const docRef = await addDoc(collection(this.db, "alumnos"), {
         correo: email,
@@ -76,6 +77,8 @@ export class FirebaseService {
       case 'Firebase: Password should be at least 6 characters (auth/weak-password).':
         return 'Introducir una contraseña de mas de 6 o más caracteres'
         break;
+      case 'Firebase: Error (auth/email-already-in-use).':
+        return '¡Ya existe otro usuario con el email indicado!'
 
       default:
         break;
@@ -84,7 +87,7 @@ export class FirebaseService {
   }
   iniciarSesion(email: any, contra: any) {
     const auth = getAuth();
-    setPersistence(auth, browserSessionPersistence)
+    setPersistence(auth, browserLocalPersistence)
       .then(async (_) => {
         return signInWithEmailAndPassword(auth, email, contra)
           .then((userCredential) => {

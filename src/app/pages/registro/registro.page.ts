@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonicModule, NavController } from '@ionic/angular';
+import { IonicModule, NavController, ToastController } from '@ionic/angular';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { PhotoService, UserPhoto } from 'src/app/services/photo.service';
 import { Photo } from '@capacitor/camera';
@@ -32,7 +32,7 @@ export class RegistroPage implements OnInit {
     cinturon: new FormControl('blanco'),
     peso: new FormControl(),
     dni: new FormControl('', [Validators.required]),
-    telefono: new FormControl('', [Validators.required, Validators.minLength(9), Validators.maxLength(10)]),
+    telefono: new FormControl('', [Validators.required,  Validators.pattern('^[0-9]{9,}$')]),
     tarifa: new FormControl('iniciacion', Validators.required),
     fotoPerfil: new FormControl(),
   }
@@ -45,6 +45,7 @@ export class RegistroPage implements OnInit {
     private navCtrl: NavController,
     private data: DataService,
     private datePipe: DatePipe,
+    private toastController: ToastController,
     ) {
     this.idFoto = new Date().getTime() + '.jpeg';
   }
@@ -59,101 +60,59 @@ export class RegistroPage implements OnInit {
       });
   }
 
-
-
   ngOnInit() { }
-
   async onSubmit() {
     if (this.formReg.controls['fotoPerfil'].touched) {
       this.mostrar = true;
       this.guardarFoto = true;
       this.photoService.savePicture(this.guardarFoto, this.photoService.photo, this.idFoto);
+    }else{
+      this.mostrar=true;
+      this.foto='1685544137941.jpeg';
     }
     const fechaInscripcion = this.datePipe.transform(new Date,'yyyy/MM/dd')
-
-
-<<<<<<< HEAD
     await this.firebase.crearNuevoUsuario(this.formReg.value.email, this.formReg.value.password, this.foto).then(
-      async (user : any)=>{
-       await  this.firebase.guardarNuevoAlumno(
-          this.formReg.value.email,
-          this.formReg.value.password,
-          this.formReg.value.nombre,
-          this.formReg.value.apellidos,
-          this.formReg.value.telefono,
-          this.formReg.value.cinturon,
-          this.formReg.value.peso,
-          this.formReg.value.tarifa,
-          this.foto,
-          this.formReg.value.dni,
-          fechaInscripcion
-        ).then(
-         (resp) => {
-            console.log(resp)
-            this.formReg.reset();
-            console.log('Se ha creado');
-            debugger
-            this.navCtrl.navigateForward('/clases');
-          }
-        ).catch(
-          (resp) => {
-            console.log('Error al crear nuevo usuario');
-          }
-        );
+      async (user : boolean)=>{
+        if(user){
+          await  this.firebase.guardarNuevoAlumno(
+            this.formReg.value.email,
+            this.formReg.value.password,
+            this.formReg.value.nombre,
+            this.formReg.value.apellidos,
+            this.formReg.value.telefono,
+            this.formReg.value.cinturon,
+            this.formReg.value.peso,
+            this.formReg.value.tarifa,
+            this.foto,
+            this.formReg.value.dni,
+            fechaInscripcion
+          ).then(
+           (resp) => {
+
+              console.log(resp)
+              this.formReg.reset();
+              console.log('Se ha creado');
+              this.navCtrl.navigateForward('/clases');
+            }
+          ).catch(
+            (resp) => {
+              console.log('Error al crear nuevo usuario');
+            }
+          );
+
+
+        }else{
+          this.formReg.controls['email'].setValue('');
+          this.mostrar=false;
+        }
 
       }
-
     ).catch(
       (error)=>{
+        this.mostrar=false;
         this.formReg.controls['email'].setValue('');
       }
     );
-
-
-=======
-
-    await this.firebase.crearNuevoUsuario(this.formReg.value.email, this.formReg.value.password, this.foto).then( async ()=>{
-
-      await this.firebase.guardarNuevoAlumno(
-        this.formReg.value.email,
-        this.formReg.value.password,
-        this.formReg.value.nombre,
-        this.formReg.value.apellidos,
-        this.formReg.value.telefono,
-        this.formReg.value.cinturon,
-        this.formReg.value.peso,
-        this.formReg.value.tarifa,
-        this.foto,
-      ).then(
-  
-        (resp) => {
-          this.formReg.reset();
-
-          console.log('Se ha creado');
-        }
-      ).catch(
-        (resp) => {
-          console.log('NOOOOOOOOOOOO Se ha creado');
-        }
-      );
-    });
-    this.photoService.descargarAvatar(this.foto).then(
-      (resp) => {
-        // this.data.setAvatarPerfil(resp);
-        // this.data.setNombre(this.foto);
-      }
-
-    ).catch(
-      (error) => {
-      
-      }
->>>>>>> 23c053aa54d6587a272255ada91a134f501b2333
-
-
-
-
-
-
   }
 
   volverInicio() {
@@ -167,7 +126,13 @@ export class RegistroPage implements OnInit {
       this.formReg.controls[campo].touched
     );
   }
-
+  async presentToast(mensaje: any) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 2000 // duración en milisegundos
+    });
+    toast.present();
+  }
 
 
 }

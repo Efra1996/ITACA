@@ -127,6 +127,8 @@ export class EventosPage implements OnInit {
       (resp) => {
         this.formReg.reset();
         this.mostrarFoto=false;
+        this.mostrar = false;
+
         this.foto3='Cartel del evento!';
         // this.date=this.datePipe.transform(new Date(),'yyyy/MM/dd')!
         console.log('Se ha creado');

@@ -16,7 +16,7 @@
     <ion-item>
       <ion-input class="ion-margin-top" label="Correo de usuario" label-placement="floating" placeholder="Email"
         type="email" formControlName="email"></ion-input>
-      <ion-icon slot="end" name="mail"></ion-icon>   
+      <ion-icon slot="end" name="mail"></ion-icon>
     </ion-item>
     <ion-text color="danger" *ngIf="campoEsValido('email')">*Campo obligatorio - formato de correo  </ion-text>
     <ion-item>
@@ -24,10 +24,10 @@
         type="password" formControlName="password"></ion-input>
       <ion-icon slot="end" name="key"></ion-icon>
     </ion-item>
-    <ion-text color="danger" *ngIf="campoEsValido('password')">*Campo obligatorio - Más de 6 caracteres </ion-text>
+    <ion-text color="danger" *ngIf="campoEsValido('password')">*Campo obligatorio - Más de 5 caracteres </ion-text>
     <ion-item>
       <ion-input class="ion-margin-top" label="Nombre" label-placement="floating" type="text"
-        formControlName="nombre"></ion-input>
+        formControlName="nombre" ></ion-input>
       <ion-icon name="person"></ion-icon>
     </ion-item>
     <ion-text color="danger" *ngIf="campoEsValido('nombre')">*Campo obligatorio </ion-text>
@@ -37,6 +37,13 @@
       <ion-icon name="person-outline"></ion-icon>
     </ion-item>
     <ion-text color="danger" *ngIf="campoEsValido('apellidos')">*Campo obligatorio </ion-text>
+    <!-- DNI -->
+    <ion-item>
+      <ion-input class="ion-margin-top" label="DNI/NIE" label-placement="floating" type="text"
+        formControlName="dni"></ion-input>
+        <ion-icon name="id-card-sharp"></ion-icon>
+    </ion-item>
+    <ion-text color="danger" *ngIf="campoEsValido('dni')">*Campo obligatorio</ion-text>
 
     <ion-item>
       <ion-input class="ion-margin-top" label="Telefono" label-placement="floating" type="number"

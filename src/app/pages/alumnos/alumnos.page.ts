@@ -25,9 +25,9 @@ export class AlumnosPage implements OnInit {
   profe : boolean = false;
   formReg: FormGroup = this.fb.group({
     email: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.email]),
-    dni: new FormControl(),
-    nombre: new FormControl('', Validators.required),
-    apellidos: new FormControl('', Validators.required),
+    dni: new FormControl({ value: '', disabled: true }),
+    nombre: new FormControl({ value: '', disabled: true }, Validators.required),
+    apellidos: new FormControl({ value: '', disabled: true }, Validators.required),
     cinturon: new FormControl('blanco'),
     grados: new FormControl(),
     peso: new FormControl(),
@@ -100,10 +100,10 @@ export class AlumnosPage implements OnInit {
         this.formReg.controls['cinturon'].setValue(this.alumnoModificar.cinturon);
         this.formReg.controls['peso'].setValue(this.alumnoModificar.peso);
         this.formReg.controls['tarifa'].setValue(this.alumnoModificar.tarifa);
-        this.formReg.controls['telefono'].setValue(this.alumnoModificar.telefono); 
-        this.formReg.controls['dni'].setValue(this.alumnoModificar.dni?this.alumnoModificar.dni:'26275424V' ); 
-        this.formReg.controls['grados'].setValue(this.alumnoModificar.grados?this.alumnoModificar.grados : 0 ); 
-        this.formReg.controls['fecha'].setValue(this.alumnoModificar.fecha?this.alumnoModificar.fecha : '2023/01/01' ); 
+        this.formReg.controls['telefono'].setValue(this.alumnoModificar.telefono);
+        this.formReg.controls['dni'].setValue(this.alumnoModificar.dni?this.alumnoModificar.dni:'26275424V' );
+        this.formReg.controls['grados'].setValue(this.alumnoModificar.grados?this.alumnoModificar.grados : 0 );
+        this.formReg.controls['fecha'].setValue(this.alumnoModificar.fecha?this.alumnoModificar.fecha : '2023/01/01' );
         // this.profe=this.alumnoModificar.esProfe? this.alumnoModificar.esProfe : false
         this.formReg.controls['esProfe'].setValue(this.alumnoModificar.profesor ?true : false);
       })
@@ -136,7 +136,7 @@ export class AlumnosPage implements OnInit {
         }
       );
 
-    
+
   }
   campoEsValido(campo: string) {
     return (
@@ -157,7 +157,7 @@ export class AlumnosPage implements OnInit {
       // const datos=this.alumnoBusqueda.split(' ');
       // this.allAlumnos = [];
       // const pago = await this.firebase.recuperarAlumnosNombre(datos[0],datos[1]);
-  
+
       // if(pago){
       //   console.log(pago)
       //   this.allAlumnos = pago;
@@ -171,7 +171,7 @@ export class AlumnosPage implements OnInit {
             return null;
           });
         });
-  
+
         return Promise.all(promesas).then((avatares) => {
           alumnos.forEach((alumno: Alumnos, i: number) => {
             alumno.avatar = avatares[i] || this.avatar;
@@ -180,8 +180,8 @@ export class AlumnosPage implements OnInit {
           console.log(this.allAlumnos)
           this.cargar=false;
         })
-  
-  
+
+
       });
 
 

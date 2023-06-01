@@ -14,17 +14,19 @@ import { Clase } from '../interfaces/interfaces';
 export class FirebaseService {
   app = initializeApp(environment.firebaseConfig);
   db = getFirestore(this.app);
+
   constructor(private toastController: ToastController,
     private navCtrl: NavController,
   ) {
   }
-  async crearNuevoUsuario(email: any, contra: any, foto: any) {
+  async crearNuevoUsuario(email: any, contra: any, foto: any) : Promise<any> {
     try {
       const auth = getAuth(this.app);
       const userCredential = await createUserWithEmailAndPassword(auth, email, contra);
       this.presentToast('Usuario creado correctamente');
       const user = userCredential.user;
-      this.navCtrl.navigateForward('/clases');
+      return userCredential
+
     } catch (error: any) {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -32,7 +34,7 @@ export class FirebaseService {
       console.log(error.message);
     }
   }
-  async guardarNuevoAlumno(email: any, contra: any, nomb: string, ape: string, tel: number, cinto: string, pes: number, trf: string, foto: any) {
+  async guardarNuevoAlumno(email: any, contra: any, nomb: string, ape: string, tel: number, cinto: string, pes: number, trf: string, foto: any,dni : string, fecha : any) {
     try {
       const docRef = await addDoc(collection(this.db, "alumnos"), {
         correo: email,
@@ -43,7 +45,9 @@ export class FirebaseService {
         cinturon: cinto,
         tarifa: trf,
         peso: pes,
-        avatar: foto
+        avatar: foto,
+        dni:dni,
+        fecha:fecha
       });
       console.log("Document written with ID: ", docRef.id);
     } catch (e) {
@@ -224,7 +228,7 @@ export class FirebaseService {
             const clase = doc.data();
             resolve(clase);
           });
-          resolve(null); // Si no se encuentra ningún alumno 
+          resolve(null); // Si no se encuentra ningún alumno
         })
         .catch((error) => {
           reject(error);
@@ -473,7 +477,7 @@ export class FirebaseService {
   actualizarAlumno(email: string, nomb: string, ape: string, tel: number, cinto: string, pes: number, trf: string, foto: any): Promise<any>{
     const citiesRef = collection(this.db, "alumnos");
     const q = query(citiesRef, where("correo", "==", email));
-    
+
     return new Promise((resolve, reject) => {
       getDocs(q)
         .then((querySnapshot) => {
@@ -502,7 +506,7 @@ export class FirebaseService {
   actualizarContra(email: string, contra: any) : Promise<any>{
     const citiesRef = collection(this.db, "alumnos");
     const q = query(citiesRef, where("correo", "==", email));
-    
+
     return new Promise((resolve, reject) => {
       getDocs(q)
         .then((querySnapshot) => {
@@ -628,7 +632,7 @@ export class FirebaseService {
   actualizarAlumnoProfe(email: string, tel: number, cinto: string, pes: number, trf: string,dni : string,fecha : string,esProfe : boolean,grados : number): Promise<any>{
     const citiesRef = collection(this.db, "alumnos");
     const q = query(citiesRef, where("correo", "==", email));
-    
+
     return new Promise((resolve, reject) => {
       getDocs(q)
         .then((querySnapshot) => {

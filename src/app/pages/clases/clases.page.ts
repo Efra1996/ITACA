@@ -111,7 +111,7 @@ export class ClasesPage implements OnInit {
         return Promise.all(
           alumno.map((datos: string) => {
             const separaAvatar = datos.split('-');
-            nombreAlumnos.push(separaAvatar[0])
+            // nombreAlumnos.push(separaAvatar[0])
             return this.foto.descargarAvatar(separaAvatar[1]).catch((error) => {
               console.log(error);
               return null;
@@ -121,6 +121,7 @@ export class ClasesPage implements OnInit {
           alumno.forEach((_: any, i: number) => {
             alumno[i] = avatares[i] || this.alumnoAvatar; // Asignarle el url del avatar
           });
+          // this.alumnosApuntados=nombreAlumnos
         });
       });
       Promise.all(promesas).then(() => { // Ordenar Clases
@@ -162,13 +163,13 @@ export class ClasesPage implements OnInit {
             alumno: clases.alumno,
             apuntado: apuntado,
             finalizada: finalizada,
-            nombreAlumnos:nombreAlumnos
+            // nombreAlumnos: nombreAlumnos.slice(index * clases.alumno.length, (index + 1) * clases.alumno.length)
           }
           this.clases.push(nuevaClase)
         })
       });
       this.estaApuntado = false;
-      console.log(nombreAlumnos)
+      // console.log(nombreAlumnos)
     });
 
   }
@@ -275,15 +276,5 @@ export class ClasesPage implements OnInit {
         }
       )
   }
-  // async presentPopover(e: Event) {
-  //   const popover = await this.popoverController.create({
-  //     component: PopoverComponent,
-  //     event: e,
-  //   });
 
-  //   await popover.present();
-
-  //   const { role } = await popover.onDidDismiss();
-  //   this.roleMsg = `Popover dismissed with role: ${role}`;
-  // }
 }

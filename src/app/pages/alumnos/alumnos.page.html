@@ -19,12 +19,13 @@
     <ion-card-header>
       <ion-card-title style="font-size: 20px; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">LISTADO
         COMPLETO</ion-card-title>
+        <ion-card-subtitle>Total alumnos: {{allAlumnos.length}}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
       <!-- thumbnail -->
       <div *ngFor="let alumno of allAlumnos" style="border: solid 2px hsl(0, 0%, 100%); border-radius: 10px;">
         <ion-item style="border-radius: 5px;">
-          <ion-thumbnail slot="start"> 
+          <ion-thumbnail slot="start">
             <img alt="Silhouette of mountains" [src]="alumno.avatar" />
           </ion-thumbnail>
           <ion-label style="font-size: 20px; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"><strong>{{

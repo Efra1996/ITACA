@@ -78,6 +78,7 @@ export class ClasesPage implements OnInit {
 
     if (item.apuntado === false) {
       if (this.user) {
+
         await this.firebase.apuntarAlumno(this.fechaSeleccionada, hora.toString(), this.alumnoActual.nombre + '-' + this.alumnoActual.avatar)
           .catch(
             (error) => {
@@ -104,11 +105,13 @@ export class ClasesPage implements OnInit {
   }
   async claseSeleccionada() {
     this.clases = [];
+    let nombreAlumnos : string[] =[]
     await this.firebase.recuperarClasesDia(this.fechaSeleccionada).then((clases) => {
       let promesas = clases.map(({ alumno }) => { // Primero descargar el avatar de los alumnos
         return Promise.all(
           alumno.map((datos: string) => {
             const separaAvatar = datos.split('-');
+            nombreAlumnos.push(separaAvatar[0])
             return this.foto.descargarAvatar(separaAvatar[1]).catch((error) => {
               console.log(error);
               return null;
@@ -140,7 +143,7 @@ export class ClasesPage implements OnInit {
           }else if( fechaClase.getMonth() === new Date().getMonth() &&fechaClase.getDate() < new Date().getDate()){
             finalizada = true;
 
- 
+
           } else if (fechaClase.getDate() === new Date().getDate()) {
             const horaClase = parseInt(clases.hora.split(':')[0]);
             const minutosClase = parseInt(clases.hora.split(':')[1]);
@@ -158,13 +161,14 @@ export class ClasesPage implements OnInit {
             hora: clases.hora,
             alumno: clases.alumno,
             apuntado: apuntado,
-            finalizada: finalizada
+            finalizada: finalizada,
+            nombreAlumnos:nombreAlumnos
           }
           this.clases.push(nuevaClase)
         })
       });
       this.estaApuntado = false;
-
+      console.log(nombreAlumnos)
     });
 
   }

@@ -8,6 +8,7 @@ export interface Clase{
     titulo : string;
     apuntado?:boolean;
     finalizada?:boolean;
+    nombreAlumnos?:string[];
 
 }
 export interface Alumno{

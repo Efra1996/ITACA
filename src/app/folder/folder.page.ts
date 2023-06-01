@@ -40,13 +40,13 @@ export class FolderPage implements OnInit {
         this.firebase.recuperarAlumno(user.email!).then(
           (alumno)=>{
             console.log(alumno.avatar,alumno.nombre)
-            // this.navCtrl.navigateForward('/clases');
+            this.navCtrl.navigateForward('/clases');
           }
         )
         console.log(user,'Ya esta iniciado')
 
         // Hay una sesión iniciada, redirecciona al usuario a la página principal
-  
+
       } else {
         // No hay sesión iniciada, el usuario debe iniciar sesión
         // Puedes mostrar la pantalla de inicio de sesión o realizar otras acciones

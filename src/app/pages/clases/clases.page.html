@@ -42,10 +42,20 @@
     <hr />
     <ion-grid>
       <ion-row>
-        <ion-col size="2.3" *ngFor="let item of class.alumno">
-          <ion-avatar id="trigger-button">
+        <ion-col size="2.3" *ngFor="let item of class.alumno; let i=index ">
+          <ion-avatar [id]="'trigger-button' + i">
             <img [src]="item">
           </ion-avatar>
+          <!-- popover -->
+          <ion-popover [trigger]="'trigger-button' + i" triggerAction="hover">
+            <ng-template>
+              <ion-content class="ion-text-center" style="color: white; font-size: 15px; --background: #ffffff;">
+                <ion-img [src]="item"
+                alt="The Wisconsin State Capitol building in Madison, WI at night" style="height: 250px; width: 300px; object-fit: cover;"></ion-img>
+                {{class.nombreAlumnos![i]}}
+             </ion-content>
+            </ng-template>
+          </ion-popover>
         </ion-col>
       </ion-row>
     </ion-grid>

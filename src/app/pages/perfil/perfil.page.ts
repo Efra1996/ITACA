@@ -87,6 +87,8 @@ export class PerfilPage implements OnInit {
       this.mostrar = true;
       this.guardarFoto = true;
       this.photoService.savePicture(this.guardarFoto, this.photoService.photo, this.idFoto);
+    }else{
+        this.foto=this.avatar!;
     }
 
     await this.firebase.actualizarAlumno(
@@ -97,7 +99,7 @@ export class PerfilPage implements OnInit {
       this.formReg.value.cinturon,
       this.formReg.value.peso,
       this.formReg.value.tarifa,
-      this.formReg.value.fotoPerfil,
+      this.foto
 
     ).then(
       (resp) => {

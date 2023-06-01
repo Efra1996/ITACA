@@ -16,10 +16,13 @@
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ng-container *ngIf="!(p.title === 'Alumnos' && !esProfe)">
               <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false"
-                routerLinkActive="selected">
-                <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'">
+                routerLinkActive="selected" (click)="p.title === 'Salir' ? provicional() : null">
+                <ion-icon  aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'">
                 </ion-icon>
                 <ion-label><strong> {{ p.title }}</strong> </ion-label>
+                <!-- <ion-button *ngIf="p.title === 'Salir'" (click)="provicional()" fill="clear" slot="end">
+                  <ion-icon slot="icon-only" name="exit"></ion-icon>
+                </ion-button> -->
               </ion-item>
             </ng-container>
           </ion-menu-toggle>

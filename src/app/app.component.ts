@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 import { ComponetsModule } from './componets/componets.module';
 import { DataService } from './services/data.service';
 import { PhotoService } from './services/photo.service';
-import { getAuth } from 'firebase/auth';
+import { getAuth, signOut } from 'firebase/auth';
 import { FirebaseService } from './services/firebase.service';
 @Component({
   selector: 'app-root',
@@ -40,11 +40,13 @@ export class AppComponent {
     { title: 'Perfil', url: '/perfil', icon: 'person' },
     { title: 'Entrenamientos', url: '/entrenamiento', icon: 'barbell' },
     { title: 'Alumnos', url: '/alumnos', icon: 'people' },
-    { title: 'Salir', url: '/folder', icon: 'exit' },
+    { title: 'Salir', icon: 'exit' },
   ];
   constructor(private data: DataService,
     private photoService: PhotoService,
-    private firebase: FirebaseService) {
+    private firebase: FirebaseService,
+    private navCtrl: NavController,
+    ) {
 
       this.cargarDatos();
       const indiceAleatorio = Math.floor(Math.random() * 10);
@@ -52,6 +54,20 @@ export class AppComponent {
     }
 
   ngOnInit() {
+  }
+  provicional(){
+    const auth = getAuth();
+    signOut(auth)
+      .then(() => {
+        // La sesión se cerró exitosamente
+        this.navCtrl.navigateRoot('/folder');
+        console.log('Se cerro la sesion ');
+
+      })
+      .catch((error) => {
+        // Ocurrió un error al cerrar la sesión
+        console.error('Error al cerrar sesión:', error);
+      });
   }
   cargarDatos(){
     const auth = getAuth();

@@ -15,6 +15,19 @@ import { FirebaseService } from './services/firebase.service';
   imports: [IonicModule, RouterLink, RouterLinkActive, CommonModule, ComponetsModule],
 })
 export class AppComponent {
+  frasesRandom : string[]=[
+    '¡Siempre se entrena!',
+    'Hacer excusas, quema 0 calorias.',
+    'En los días buenos, entrena. En los días malos, entrena más duro.',
+    'Recuerda: Una mano en el suelo, es una mano rota.',
+    '¡Solo pueden comer pastelitos los que hacen todos los cambios!',
+    'Comer, Dormir, Gym, Repetir.',
+    'Todo el progreso tiene lugar fuera de la zona de confort',
+    'Si quieres ser un Tiburón, debes entrenar con los Tiburones',
+    'Aprender es la clave del progreso, La ignorancia es la limitación, la sabiduría es la libertad',
+    'Las medallas se ganan en el gimnasio, en día de la competición es cuando se recogen'
+  ];
+  fraseMuestra! : string;
   esProfe! : boolean;
   avatar!: string;
   nombre!: string;
@@ -32,7 +45,10 @@ export class AppComponent {
   constructor(private data: DataService,
     private photoService: PhotoService,
     private firebase: FirebaseService) {
+
       this.cargarDatos();
+      const indiceAleatorio = Math.floor(Math.random() * 10);
+      this.fraseMuestra=this.frasesRandom[indiceAleatorio]
     }
 
   ngOnInit() {
@@ -49,12 +65,12 @@ export class AppComponent {
           this.photoService.descargarAvatar(alumno.avatar).then(
             (resp) => {
               this.avatar = resp;
-              
+
             }
 
           ).catch(
             (_) => {
-              console.log('Soy un pringado')
+
             }
 
           )

@@ -8,7 +8,7 @@ export interface Clase{
     titulo : string;
     apuntado?:boolean;
     finalizada?:boolean;
-    nombreAlumnos?:string[];
+    fotoActual?:number;
     nombres?:string[];
 
 }

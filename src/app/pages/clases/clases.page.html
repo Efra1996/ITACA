@@ -43,21 +43,42 @@
     <ion-grid>
       <ion-row>
         <ion-col size="2.3" *ngFor="let item of class.alumno; let i=index ">
-          <ion-avatar [id]="'trigger-button' + class.titulo + i">
+          <ion-avatar [id]="'trigger-button' + class.titulo + i" (click)="abreFoto(class,i)">
             <img [src]="item">
           </ion-avatar>
           <!-- popover -->
-          <ion-popover [trigger]="'trigger-button' + class.titulo + i" triggerAction="hover" alignment="center"  [animated]="true" >
+          <ion-popover [trigger]="'trigger-button' + class.titulo + i" triggerAction="hover" alignment="center"  [animated]="true" style="--height: 150px; --width:240px;">
             <ng-template>
               <ion-content class="ion-text-center" style="color: white; font-size: 15px; --background: #ffffff;">
-                <ion-thumbnail style="margin: 20px; height: 200px; width: 200px;">
-                  <img alt="Silhouette of mountains" [src]="item" style="border-radius: 20px;"/>
-                </ion-thumbnail>
-                <!-- <ion-img [src]="item"
-                alt="The Wisconsin State Capitol building in Madison, WI at night" style="height: 250px; width: 300px; object-fit: cover; padding: auto;">
-              </ion-img> -->
 
-               <ion-label style="font-size: 18px; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif ;"> <strong>{{class.nombres![i]}}</strong> </ion-label>
+                <ion-grid>
+                  <ion-row>
+                    <!-- boton menos -->
+                    <ion-col>
+
+                <ion-button shape="round" fill="clear" color="dark" (click)="restarFoto(class)" size="small" style="margin-top: 50px;">
+                  <ion-icon name="caret-back-outline"></ion-icon> </ion-button>
+                    </ion-col>
+                    <!-- imagen -->
+                    <ion-col>
+
+                      <ion-thumbnail style="height: 102px; width: 102px;">
+                        <img alt="Silhouette of mountains" [src]="class.alumno[class.fotoActual!]" style="border-radius: 20px;"/>
+                      </ion-thumbnail>
+
+                    </ion-col>
+                    <!-- boton mas -->
+                    <ion-col>
+                      <ion-button fill="clear" shape="round" color="dark" (click)="sumarFoto(class)" size="small" style="margin-top: 50px;">
+                        <ion-icon name="caret-forward-outline"></ion-icon>
+                      </ion-button>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+               <ion-label style="font-size: 18px; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif ;">
+                <strong>{{class.nombres![class.fotoActual!]}}</strong>
+               </ion-label>
+
              </ion-content>
             </ng-template>
           </ion-popover>

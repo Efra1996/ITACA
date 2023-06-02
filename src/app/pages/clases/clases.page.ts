@@ -40,6 +40,7 @@ export class ClasesPage implements OnInit {
   dateTimeLocale: string = 'es-ES';
   auth = getAuth();
   user = this.auth.currentUser;
+  index : number =0;
   //formulario nueva clase
   formReg: FormGroup = this.fb.group({
     titulo: new FormControl('', Validators.required),
@@ -163,8 +164,8 @@ export class ClasesPage implements OnInit {
             alumno: clases.alumno,
             apuntado: apuntado,
             finalizada: finalizada,
-            nombres:clases.nombres
-            // nombreAlumnos: nombreAlumnos.slice(index * clases.alumno.length, (index + 1) * clases.alumno.length)
+            nombres:clases.nombres,
+            fotoActual:0,
           }
           this.clases.push(nuevaClase)
         })
@@ -277,6 +278,15 @@ export class ClasesPage implements OnInit {
           console.log(error)
         }
       )
+  }
+  sumarFoto(clase : Clase){
+    clase.fotoActual = (clase.fotoActual! + 1) % clase.alumno.length;
+  }
+  restarFoto(clase : Clase){
+    clase.fotoActual = (clase.fotoActual! - 1 + clase.alumno.length) % clase.alumno.length;
+  }
+  abreFoto(clase : Clase,index : number){
+    clase.fotoActual = index;
   }
 
 }
